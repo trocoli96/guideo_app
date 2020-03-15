@@ -1,3 +1,5 @@
+create database guideo;
+
 create table user(
                     id integer not null primary key auto_increment,
                     first_name varchar(255) not null,
@@ -7,7 +9,7 @@ create table user(
                     user_role varchar (255),
                     created_at timestamp default current_timestamp(),
                     updated_at timestamp default current_timestamp()
-    )
+    );
 
 create table poi(
                     id integer not null primary key auto_increment,
@@ -19,7 +21,7 @@ create table poi(
                     updated_at timestamp default current_timestamp(),
                     submitter_id integer not null,
                     foreign key (submitter_id) references user (id)
-)
+);
 
 create table poi_images(
                     id integer not null primary key auto_increment,
@@ -28,7 +30,7 @@ create table poi_images(
                     created_at timestamp default current_timestamp(),
                     updated_at timestamp default current_timestamp(),
                     foreign key (poi_id) references poi (id)
-)
+);
 
 create table audioguide(
                     id integer not null primary key auto_increment,
@@ -40,7 +42,7 @@ create table audioguide(
                     updated_at timestamp default current_timestamp(),
                     foreign key (user_id) references user (id),
                     foreign key (poi_id) references poi (id)
-)
+);
 
 create table review(
                     id integer not null primary key auto_increment,
