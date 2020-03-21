@@ -18,10 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('user/', 'AuthController@me');
-Route::get('user/{id}', 'AuthController@getUserById');
-
-Route::post('/user', 'AuthController@createUser');
-Route::put('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
+Route::post('/user', 'AuthController@register');
+Route::get('me', 'AuthController@me');
+Route::post('/logout', 'AuthController@logout');
+
+Route::get('user/{id}', 'AuthController@getUserById');
+Route::put('/edituser', 'AuthController@editUser');
 Route::put('/profilepicture', 'AuthController@updateProfilePic');

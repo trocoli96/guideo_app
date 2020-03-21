@@ -1,4 +1,3 @@
-create database guideo;
 
 
 drop table if exists audioguide;

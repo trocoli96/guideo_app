@@ -3,28 +3,24 @@
 
 ## Backend installation guide:
 
-Requirements: Node (version 10+), Npm and docker
+Requirements: docker, php 7.1, docker-compose and composer
 
+**1) Copy the env-example file**
 
-1) Add Laradock in /guideo-app
+`cd backend-api
+`
 
-git clone https://github.com/laradock/laradock
+`cp env-example .env
+`
 
-2) Enter in the laradock folder
+**2) Run docker-compose**
 
-cd laradock
+`sudo docker-compose up -d
+`
 
-..then copy the env-example file
+**3) Run `composer update` or `composer install`**
 
-cp env-example .env
-
-3) Change in the .env file the following line
-
-APP_CODE_PATH_HOST=../backend-api
-
-4) Run docker-compose
-
-sudo docker-compose up -d nginx mysql
+**4) Run `php artisan key:generate`**
 
 
 ## Frontend installation guide:
