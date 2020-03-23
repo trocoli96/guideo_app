@@ -1,24 +1,25 @@
 <?php
 
 namespace App;
+
+use App\CustomID;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
+    use CustomID;
 
     protected $table = 'user';
 
-    protected $fillable = ['email', 'password', 'first_name', 'last_name', 'user_role'];
+    protected $fillable = ['id', 'email', 'password', 'first_name', 'last_name', 'user_role'];
 
     protected $guarded = ['id'];
 
     protected $hidden = ['password'];
 
-
-
-    use Notifiable;
 
     // Rest omitted for brevity
 

@@ -17,12 +17,24 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+/*
+ * Routes for authenticate
+ *
+ */
 Route::post('/login', 'AuthController@login');
 Route::post('/user', 'AuthController@register');
 Route::get('me', 'AuthController@me');
 Route::post('/logout', 'AuthController@logout');
+Route::get('/loggeduser', 'AuthController@loggedUser');
 
 Route::get('user/{id}', 'AuthController@getUserById');
 Route::put('/edituser', 'AuthController@editUser');
 Route::put('/profilepicture', 'AuthController@updateProfilePic');
+
+/*
+ * Routes related with Poi's
+ *
+ */
+
+Route::post('poi/create', 'PoiController@createPoi');
+Route::post('location/create', 'PoiController@createLocation');

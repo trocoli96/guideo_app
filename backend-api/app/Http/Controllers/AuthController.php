@@ -41,6 +41,7 @@ class AuthController extends Controller
         }
 
         $user = User::create([
+            'id' => User::generateID(),
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
@@ -51,7 +52,7 @@ class AuthController extends Controller
             return  $this->login($request);
         }
 
-        return $this->login($request);
+        return  $this->successResponse($user, Response::HTTP_CREATED);
     }
 
     /**
@@ -115,5 +116,11 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    public function loggedUser()
+    {
+        $user = auth()->user();
+        return $user;
     }
 }
