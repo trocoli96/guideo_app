@@ -4,11 +4,11 @@ import Logo from './logo.png';
 import { NavigationContainer} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from "./components/HomeScreen";
-import SettingsScreen from "./components/SettingsScreen";
-import MyProfileScreen from "./components/MyProfileScreen";
-import ListLocationsScreen from "./components/ListLocationsScreen";
-import LanguageScreen from "./components/LanguageScreen";
+import HomeScreen from "./views/HomeScreen";
+import SettingsScreen from "./views/SettingsScreen";
+import MyProfileScreen from "./views/MyProfileScreen";
+import ListLocationsScreen from "./views/ListLocationsScreen";
+import LanguageScreen from "./views/LanguageScreen";
 
 const Tab = createBottomTabNavigator();
 

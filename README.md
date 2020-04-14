@@ -22,6 +22,8 @@ Requirements: docker, php 7.1, docker-compose and composer
 
 **4) Run `php artisan key:generate`**
 
+**5) Run `php artisan kwt:secret`**
+
 
 ## Frontend installation guide:
 
