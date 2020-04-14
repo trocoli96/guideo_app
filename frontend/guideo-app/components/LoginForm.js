@@ -22,7 +22,7 @@ function LoginForm(){
         setError(false);
         setIsFetching(true);
         const fetchData = async () =>{
-            const url = "http://127.0.0.1:80/api/login";
+            const url = "http://localhost:80/api/login";
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -30,7 +30,6 @@ function LoginForm(){
                     Accept: "application/json",
                     "Content-type": "application/json"
                 }),
-                mode: "cors"
             };
             return fetch(url, options)
                 .then (response => {
@@ -46,8 +45,8 @@ function LoginForm(){
                     setIsFetching(false);
                     console.log('login succesfully');
                 }).catch(error => {
+                    console.log("Login incorrecto. Error: " + error);
                     setIsFetching(false);
-                    console.log(error);
                     if (error === 401) {
                         setError(true);
                         console.log("hola");
@@ -64,22 +63,25 @@ function LoginForm(){
                             style={{ marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1 }}
                             textContentType = "emailAddress"
                             autoCompleteType = "email"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChangeText={text => setEmail(text)}
                             editable
                         />
-                <Text>Password!</Text>
+                <Text>Password</Text>
                 <TextInput
                                     style={{ marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
                                     textContentType = "emailAddress"
                                     autoCompleteType = "password"
-                                    secureTextEntry = 'true'
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChangeText={text => setPassword(text)}
                                     editable
                         />
-                <Button
-                    title="Login"
-                    onPress={handleLogin}
+                {isFetching ?
+                    <Text>Fetching...</Text>
+                    :
+                    <Button
+                        title="Login"
+                        onPress={handleLogin}
                     />
+                }
 
             </View>
 
