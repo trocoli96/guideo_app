@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {Text, View, TextInput, Button} from "react-native";
-
+import { GUIDEO_API_URL } from 'react-native-dotenv'
 
 function LoginForm(){
 
@@ -19,7 +19,7 @@ function LoginForm(){
         setError(false);
         setIsFetching(true);
         const fetchData = async () =>{
-            const url = "http://192.168.0.38/api/login";
+            const url = GUIDEO_API_URL + `/api/login`;
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),
