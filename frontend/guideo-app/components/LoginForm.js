@@ -19,7 +19,7 @@ function LoginForm(){
         setError(false);
         setIsFetching(true);
         const fetchData = async () =>{
-            const url = "http://192.168.0.38/api/login";
+            const url = "http://127.0.0.1/api/login";
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -64,7 +64,7 @@ function LoginForm(){
             <Button title="Logout" onPress={logout} />
         </View>
             : <View>
-            <Text>My Profile!</Text>
+            <Text>My Profile</Text>
             <Text style={{textAlign: 'right'}}>Email</Text>
             <TextInput
                 style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
