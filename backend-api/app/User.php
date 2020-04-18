@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     use CustomID;
 
-    protected $table = 'user';
+    protected $table = 'users';
 
     protected $fillable = ['id', 'email', 'password', 'first_name', 'last_name', 'user_role'];
 
