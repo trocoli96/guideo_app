@@ -22,7 +22,7 @@ function LoginForm(){
         setError(false);
         setIsFetching(true);
         const fetchData = async () =>{
-            const url = "http://localhost:80/api/login";
+            const url = "http://192.168.1.130:81/api/login";
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -82,6 +82,7 @@ function LoginForm(){
                         onPress={handleLogin}
                     />
                 }
+        <Text>Para registrarte pulsa aquí</Text>
 
             </View>
 
