@@ -22,15 +22,9 @@ class PoiController extends Controller
 
     public function createPoi(Request $request){
 
-        $data = $request->all();
-
-        // we ensure that the user from the token exists
+        $data = $request->all();   
+        
         $userId = Auth::id();
-        $userIdDoesExist = User::find($userId);
-
-        if ($userIdDoesExist === null) {
-            return response()->json("User doesn't exist",400 );
-        }
 
         $possibleexistinglocation = DB::table('location')
             ->where('longitude','=', $data['longitude'])
@@ -74,6 +68,41 @@ class PoiController extends Controller
         $createdLocation->save();
 
         return response()->json($createdLocation, 200);
+    }
+
+    public function getLocations(Request $request){
+
+        $data = $request->all();
+
+        $lon = $data['longitude'];
+        $lat = $data['latitude'];
+        $radius = 20; // Km
+
+        // Every lat|lon degree° is ~ 111Km
+        $angle_radius = $radius / ( 111 * cos( $lat ) );
+
+        $min_lat = $lat - $angle_radius;
+        $max_lat = $lat + $angle_radius;
+        $min_lon = $lon - $angle_radius;
+        $max_lon = $lon + $angle_radius;
+
+        $locations = DB::table("location")
+            ->whereBetween('longitude', [$min_lon, $max_lon])
+            ->whereBetween('latitude', [$min_lat, $max_lat])
+            ->get();
+
+        return response()->json([$min_lat,$max_lat,$min_lon,$max_lon],200);
+
+    }
+
+    public function getPoiById(Request $request, $id){
+  
+        $poi = DB::table("poi")
+        ->where('id', "=", $id)
+        ->get();
+
+        return response()->json($poi,200);
+
     }
 
 }

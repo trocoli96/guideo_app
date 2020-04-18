@@ -19,11 +19,7 @@ function LoginForm(){
         setError(false);
         setIsFetching(true);
         const fetchData = async () =>{
-<<<<<<< HEAD
-            const url = "http://127.0.0.1/api/login";
-=======
             const url = GUIDEO_API_URL + `/api/login`;
->>>>>>> 38956c294ef2dfb54fa3b6b9041954ad48315618
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),

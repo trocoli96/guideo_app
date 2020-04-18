@@ -38,3 +38,5 @@ Route::put('/profilepicture', 'AuthController@updateProfilePic');
 
 Route::post('poi/create', 'PoiController@createPoi');
 Route::post('location/create', 'PoiController@createLocation');
+Route::get('locations/find', 'PoiController@getLocations');
+Route::get('poi/{id}', 'PoiController@getPoiById');

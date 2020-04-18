@@ -1,20 +1,20 @@
 
 
-
+USE admin_admin_guideo;
 drop table if exists audioguide;
 drop table if exists poi_images;
 drop table if exists review;
-drop table if exists poi;
 drop table if exists location;
-drop table if exists user;
+drop table if exists poi;
+drop table if exists users;
 
-create table user(
+create table users(
                      id int(10) not null primary key,
                      first_name varchar(255) not null,
                      last_name varchar(255) not null,
                      email varchar (255) not null,
                      password varchar(255) not null,
-                     user_role varchar (255) default 'user',
+                     user_role varchar (255) default 'users',
                      created_at timestamp default current_timestamp(),
                      updated_at timestamp default current_timestamp()
 );
@@ -25,19 +25,19 @@ create table poi(
                     created_at timestamp default current_timestamp(),
                     updated_at timestamp default current_timestamp(),
                     submitter_id int(10) not null,
-                    foreign key (submitter_id) references user (id)
+                    foreign key (submitter_id) references users (id)
 );
 
 create table location(
                          id int(10) not null primary key,
-                         longitude varchar(255) not null,
-                         latitude varchar(255) not null,
+                         longitude decimal(11,8) not null,
+                         latitude decimal(10,8) not null,
                          author_id int(10) not null,
                          created_at timestamp default current_timestamp(),
                          updated_at timestamp default current_timestamp(),
                          poi_id int(10) not null,
                          foreign key (poi_id) references poi(id),
-                         foreign key (author_id) references user (id)
+                         foreign key (author_id) references users (id)
 );
 
 create table poi_images(
@@ -57,7 +57,7 @@ create table audioguide(
                            user_id int(10) not null,
                            created_at timestamp default current_timestamp(),
                            updated_at timestamp default current_timestamp(),
-                           foreign key (user_id) references user (id),
+                           foreign key (user_id) references users (id),
                            foreign key (poi_id) references poi (id)
 );
 
@@ -72,6 +72,6 @@ create table review(
                        created_at timestamp default current_timestamp(),
                        updated_at timestamp default current_timestamp(),
                        foreign key (poi_id) references poi (id),
-                       foreign key (author_id) references user (id)
+                       foreign key (author_id) references users (id)
 )
 
