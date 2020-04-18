@@ -1,8 +1,5 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {Text, View, TextInput, Button} from "react-native";
-
-
-
 
 
 function LoginForm(){
@@ -11,7 +8,7 @@ function LoginForm(){
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
-
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const data = {
         email: email,
@@ -22,7 +19,7 @@ function LoginForm(){
         setError(false);
         setIsFetching(true);
         const fetchData = async () =>{
-            const url = "http://localhost:80/api/login";
+            const url = "http://192.168.0.38/api/login";
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -37,53 +34,61 @@ function LoginForm(){
                         console.log(response.status);
                         return response.json();
                     }
-                    console.log(response.status);
+                    setError(true);
                     return Promise.reject(response.status);
                 })
                 .then(data => {
-                    saveToken(data);
+                    setLoggedIn(true);
                     setIsFetching(false);
                     console.log('login succesfully');
                 }).catch(error => {
-                    console.log("Login incorrecto. Error: " + error);
+                    console.log(error);
                     setIsFetching(false);
                     if (error === 401) {
                         setError(true);
-                        console.log("hola");
+                        console.log(error);
                     }
                 });
         };
         fetchData();
     };
 
-    return  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>My Profile!</Text>
-                <Text style={{textAlign: 'right'}}>Email</Text>
-                <TextInput
-                            style={{ marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1 }}
-                            textContentType = "emailAddress"
-                            autoCompleteType = "email"
-                            onChangeText={text => setEmail(text)}
-                            editable
-                        />
-                <Text>Password</Text>
-                <TextInput
-                                    style={{ marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
-                                    textContentType = "emailAddress"
-                                    autoCompleteType = "password"
-                                    onChangeText={text => setPassword(text)}
-                                    editable
-                        />
-                {isFetching ?
-                    <Text>Fetching...</Text>
-                    :
-                    <Button
-                        title="Login"
-                        onPress={handleLogin}
-                    />
-                }
+    const logout = () => {
+        setLoggedIn(false);
+    }
 
+    return (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        {loggedIn ?
+        <View>
+            <Text>You are logged in</Text>
+            <Button title="Logout" onPress={logout} />
+        </View>
+            : <View>
+            <Text>My Profile!</Text>
+            <Text style={{textAlign: 'right'}}>Email</Text>
+            <TextInput
+                style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
+                textContentType="emailAddress"
+                autoCompleteType="email"
+                onChangeText={text => setEmail(text)}
+                editable
+            />
+            <Text>Password</Text>
+            <TextInput
+                style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
+                textContentType="emailAddress"
+                autoCompleteType="password"
+                onChangeText={text => setPassword(text)}
+                editable
+            />
+            <Button
+                title="Login"
+                onPress={handleLogin}
+            />
+            {error ? <Text>ha habido algun error</Text> : null}
             </View>
+    }</View> )
+
 
 }
 
