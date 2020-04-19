@@ -18,6 +18,7 @@ export default function App({navigation}) {
     return (
         <NavigationContainer>
             <Tab.Navigator
+                
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -42,6 +43,10 @@ export default function App({navigation}) {
                     activeTintColor: '#4785ff',
                     inactiveTintColor: 'gray',
                     showLabel: false,
+                    style: {
+                        borderTopColor: '#E0E0E0',
+                        borderTopWidth: '1px' 
+                    }
                 }}
             >
                 <Tab.Screen name="Settings" component={SettingsScreen} />
