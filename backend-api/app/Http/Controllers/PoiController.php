@@ -28,7 +28,7 @@ class PoiController extends Controller
 
         $lon = $data['longitude'];
         $lat = $data['latitude'];
-        $radius = 20; // Km
+        $radius = 0.2; // Km
 
         // Every lat|lon degree° is ~ 111Km
         $angle_radius = $radius / ( 111 * cos( $lon ) );
@@ -88,7 +88,7 @@ class PoiController extends Controller
 
         $lon = $data['longitude'];
         $lat = $data['latitude'];
-        $radius = 0.2; // Km
+        $radius = 20; // Km
 
         // Every lat|lon degree° is ~ 111Km
         $angle_radius = $radius / ( 111 * cos( $lon ) );
