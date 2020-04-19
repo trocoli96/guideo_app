@@ -64,7 +64,7 @@ function LoginForm(){
             <Button title="Logout" onPress={logout} />
         </View>
             : <View>
-            <Text>My Profile!</Text>
+            <Text>My Profile</Text>
             <Text style={{textAlign: 'right'}}>Email</Text>
             <TextInput
                 style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}

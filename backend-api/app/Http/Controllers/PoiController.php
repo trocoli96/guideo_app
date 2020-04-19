@@ -22,25 +22,31 @@ class PoiController extends Controller
 
     public function createPoi(Request $request){
 
-        $data = $request->all();
-
-        // we ensure that the user from the token exists
+        $data = $request->all();   
+        
         $userId = Auth::id();
-        $userIdDoesExist = User::find($userId);
 
-        if ($userIdDoesExist === null) {
-            return response()->json("User doesn't exist",400 );
-        }
+        $lon = $data['longitude'];
+        $lat = $data['latitude'];
+        $radius = 20; // Km
 
-        $possibleexistinglocation = DB::table('location')
-            ->where('longitude','=', $data['longitude'])
-            ->where('latitude','=', $data['latitude'])
-            ->get();
+        // Every lat|lon degree° is ~ 111Km
+        $angle_radius = $radius / ( 111 * cos( $lon ) );
+
+        $max_lat = $lat - $angle_radius;
+        $min_lat = $lat + $angle_radius;
+        $max_lon = $lon - $angle_radius;
+        $min_lon = $lon + $angle_radius;
+
+        $possibleexistinglocation = DB::table("location")
+        ->whereBetween('longitude', [$min_lon, $max_lon])
+        ->whereBetween('latitude', [$min_lat, $max_lat])
+        ->get();
 
         $numberofexistinglocation = sizeof($possibleexistinglocation);
 
         if($numberofexistinglocation > 0) {
-            return response()->json('You cannot place a POI in the same location', 400);
+            return response()->json('You cannot place a POI near another location', 400);
         }
 
         $createdPoi = Poi::create([
@@ -74,6 +80,41 @@ class PoiController extends Controller
         $createdLocation->save();
 
         return response()->json($createdLocation, 200);
+    }
+
+    public function getLocations(Request $request){
+
+        $data = $request->all();
+
+        $lon = $data['longitude'];
+        $lat = $data['latitude'];
+        $radius = 0.2; // Km
+
+        // Every lat|lon degree° is ~ 111Km
+        $angle_radius = $radius / ( 111 * cos( $lon ) );
+
+        $max_lat = $lat - $angle_radius;
+        $min_lat = $lat + $angle_radius;
+        $max_lon = $lon - $angle_radius;
+        $min_lon = $lon + $angle_radius;
+
+        $locations = DB::table("location")
+            ->whereBetween('longitude', [$min_lon, $max_lon])
+            ->whereBetween('latitude', [$min_lat, $max_lat])
+            ->get();
+
+        return response()->json($locations,200);
+
+    }
+
+    public function getPoiById(Request $request, $id){
+  
+        $poi = DB::table("poi")
+        ->where('id', "=", $id)
+        ->get();
+
+        return response()->json($poi,200);
+
     }
 
 }
