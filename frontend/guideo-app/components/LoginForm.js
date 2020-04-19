@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
-import {Text, View, TextInput, Button} from "react-native";
-import {GUIDEO_API_URL} from 'react-native-dotenv';
+import {Text, View, TextInput, Button, Image, Icon} from "react-native";
+import { GUIDEO_API_URL } from 'react-native-dotenv';
+import {styles} from '../Styles/Styles.js';
 import {storeToken, removeToken} from '../helpers/authHelpers';
 
 function LoginForm() {
@@ -10,6 +11,7 @@ function LoginForm() {
     const [error, setError] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
 
     const data = {
         email: email,
@@ -59,43 +61,44 @@ function LoginForm() {
         }
     }
 
-    return (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    //Se usará cuando haya Iconbutton (necesitamos libreria para eso)
+    const viewpass = () => {
+        setShowPassword(showPassword => !showPassword);
+    }
+
+    return (<View style={styles.centeredView}>
         {loggedIn ?
-            <View>
-                <Text>You are logged in</Text>
-                <Button title="Logout" onPress={logout}/>
-            </View>
-            : <View>
-                <Text>My Profile</Text>
-                <Text style={{textAlign: 'left'}}>Email</Text>
-                <TextInput
-                    style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
-                    textContentType="emailAddress"
-                    autoCompleteType="email"
-                    keyboardType="email-address"
-                    onChangeText={text => setEmail(text)}
-                    placeholder="Your email address"
-                    returnKeyType="next"
-                    editable
-                />
-                <Text>Password</Text>
-                <TextInput
-                    style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
-                    textContentType="password"
-                    autoCompleteType="password"
-                    onChangeText={text => setPassword(text)}
-                    placeholder="Your password"
-                    returnKeyType="done"
-                    secureTextEntry
-                    editable
-                />
-                <Button
-                    title="Login"
-                    onPress={handleLogin}
-                />
-                {error ? <Text>ha habido algun error</Text> : null}
-            </View>
-        }</View>)
+        <View>
+            <Text>You are logged in</Text>
+            <Button title="Logout" onPress={logout} />
+        </View>
+            : 
+        <View style={styles.centeredView}>
+            <Image style={styles.logo} source={require('../logo.png')}/>
+            <TextInput
+                style={styles.formTextInput}
+                placeholder="Email"
+                textContentType="emailAddress"
+                keyboardType="email-address"
+                autoCompleteType="email"
+                onChangeText={text => setEmail(text)}
+                editable
+            />
+            <TextInput
+                style={styles.formTextInput}
+                placeholder="Password"
+                secureTextEntry={showPassword}
+                autoCompleteType="password"
+                onChangeText={text => setPassword(text)}
+                editable
+            />
+            <Button
+                title="LOGIN"
+                onPress={handleLogin}
+            />
+            {error ? <Text>ha habido algun error</Text> : null}
+        </View>
+    }</View> )
 
 
 }

@@ -18,6 +18,7 @@ export default function App({navigation}) {
     return (
         <NavigationContainer>
             <Tab.Navigator
+                initialRouteName={'Home'}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -42,6 +43,10 @@ export default function App({navigation}) {
                     activeTintColor: '#4785ff',
                     inactiveTintColor: 'gray',
                     showLabel: false,
+                    style: {
+                        borderTopColor: '#E0E0E0',
+                        borderTopWidth: 1 
+                    }
                 }}
             >
                 <Tab.Screen name="Settings" component={SettingsScreen} />
@@ -53,20 +58,5 @@ export default function App({navigation}) {
         </NavigationContainer>
     );
 
-}
-
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logo:{
-        width: '80%',
-        height:'50%'
-    }
-});
+};
 
