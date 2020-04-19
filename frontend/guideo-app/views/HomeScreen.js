@@ -14,7 +14,7 @@ function HomeScreen({navigation}) {
         },
         mapStyle: {
             width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
+            height: '100%',
         },
     });
 
@@ -25,6 +25,10 @@ function HomeScreen({navigation}) {
                  customMapStyle={mapStyle}
                  showsUserLocation={true}
                  followsUserLocation={true}
+                 showsMyLocationButton={true}
+                 minZoomLevel={5}
+                 pitchEnabled={false}
+                 loadingEnabled={true}
                  initialRegion={{
                      latitude:  41.3959454,
                      longitude: 2.17863,

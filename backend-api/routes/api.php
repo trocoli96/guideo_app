@@ -32,7 +32,7 @@ Route::put('/edituser', 'AuthController@editUser');
 Route::put('/profilepicture', 'AuthController@updateProfilePic');
 
 /*
- * Routes related with Poi's
+ * Routes related with Poi's and Locations
  *
  */
 
