@@ -65,20 +65,26 @@ function LoginForm(){
         </View>
             : <View>
             <Text>My Profile</Text>
-            <Text style={{textAlign: 'right'}}>Email</Text>
+            <Text style={{textAlign: 'left'}}>Email</Text>
             <TextInput
                 style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
                 textContentType="emailAddress"
                 autoCompleteType="email"
+                keyboardType="email-address"
                 onChangeText={text => setEmail(text)}
+                placeholder="Your email address"
+                returnKeyType="next"
                 editable
             />
             <Text>Password</Text>
             <TextInput
                 style={{marginBottom: 20, width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
-                textContentType="emailAddress"
+                textContentType="password"
                 autoCompleteType="password"
                 onChangeText={text => setPassword(text)}
+                placeholder="Your password"
+                returnKeyType="done"
+                secureTextEntry
                 editable
             />
             <Button
