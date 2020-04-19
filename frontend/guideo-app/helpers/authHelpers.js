@@ -5,9 +5,9 @@ export async function storeToken(token) {
         await AsyncStorage.setItem('token', token);
         console.log("Token stored successfully.");
         return true;
-    } catch (e) {
+    } catch (error) {
         console.log("Error when storing token at AsyncStorage: " + e)
-        return e;
+        return error;
     }
 }
 
