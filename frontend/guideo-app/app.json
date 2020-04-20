@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "GuideoApp",
+    "name": "Guideo",
+    "slug": "guideo",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [

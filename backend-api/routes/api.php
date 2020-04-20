@@ -32,9 +32,11 @@ Route::put('/edituser', 'AuthController@editUser');
 Route::put('/profilepicture', 'AuthController@updateProfilePic');
 
 /*
- * Routes related with Poi's
+ * Routes related with Poi's and Locations
  *
  */
 
-Route::post('poi/create', 'PoiController@createPoi');
-Route::post('location/create', 'PoiController@createLocation');
+Route::post('poi', 'PoiController@createPoi');
+Route::get('poi/{id}', 'PoiController@getPoiById');
+Route::post('locations', 'PoiController@createLocation');
+Route::get('locations', 'PoiController@getLocations');
