@@ -8,7 +8,6 @@ on:
 jobs:
   build-android:
     name: Building Android apk
-    needs: install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +16,6 @@ jobs:
           npm install
         working-directory: frontend/guideo-app
       - name: Build Android Release
-        working-directory: frontend/guideo-app
         run: |
           cd android && ./gradlew assembleRelease -PMYAPP_UPLOAD_STORE_PASSWORD='${{ secrets.KEYSTORE_PASSWORD }}' -PMYAPP_UPLOAD_KEY_PASSWORD='${{ secrets.KEYSTORE_PASSWORD }}'
+        working-directory: frontend/guideo-app
