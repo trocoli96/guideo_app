@@ -24,4 +24,4 @@ jobs:
         run: yarn install
         working-directory: frontend/guideo-app
       - name: Build Android
-        run: cd frontend/guideo-app && expo build:android --type apk --generate-keystore --no-wait
+        run: expo build:android --type apk --generate-keystore --no-wait
