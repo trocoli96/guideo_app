@@ -1,0 +1,29 @@
+name: Build Android
+
+on:
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'frontend/guideo-app/**'
+
+jobs:
+  build-android:
+    name: Building Android apk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - name: Create env
+        run: cd frontend/guideo-app && echo "GUIDEO_API_URL=${{ secrets.GUIDEO_API_URL }}" > .env
+      - name: Yarn Install
+        run: yarn install
+        working-directory: frontend/guideo-app
+      - name: Expo Android:Build
+        run: cd frontend/guideo-app && expo build:android --type apk --generate-keystore --no-wait
