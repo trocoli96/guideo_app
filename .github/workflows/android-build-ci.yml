@@ -18,6 +18,8 @@ jobs:
         with:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - name: Create env
+        run: cd frontend/guideo-app && echo "GUIDEO_API_URL=${{ secrets.GUIDEO_API_URL }}" > .env
       - name: Yarn Install
         run: yarn install
         working-directory: frontend/guideo-app
