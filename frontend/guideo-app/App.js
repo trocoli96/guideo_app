@@ -3,10 +3,11 @@ import { NavigationContainer} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from "./views/HomeScreen";
-import SettingsScreen from "./views/SettingsScreen";
+import SettingsScreen from "./views/FavouritesScreen";
 import MyProfileScreen from "./views/MyProfileScreen";
 import ListLocationsScreen from "./views/ListLocationsScreen";
 import LanguageScreen from "./views/LanguageScreen";
+import FavouritesScreen from './views/FavouritesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ export default function App({navigation}) {
                     }
                 }}
             >
-                <Tab.Screen name="Settings" component={SettingsScreen} />
+                <Tab.Screen name="Settings" component={FavouritesScreen} />
                 <Tab.Screen name="Locations" component={ListLocationsScreen} />
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Language" component={LanguageScreen} />

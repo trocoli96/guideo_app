@@ -20,7 +20,7 @@ export const styles = StyleSheet.create(
         borderLeftColor: 'white',
         borderBottomColor: '#e0e0e0',
         borderBottomWidth: 1.5,
-        marginBottom: 40
+        marginBottom: 40,
     },
     logo :{
         width: 150,
@@ -40,5 +40,22 @@ export const styles = StyleSheet.create(
     loginButtonText: {
         color: 'white',
         fontSize: 20
+    },
+    loginButton: {
+        width: 300, 
+        justifyContent: 'center', 
+        backgroundColor: '#4785ff',
+        borderRadius: 100,
+        marginBottom: 50
+    },
+    passwordVisibleButton: {
+        display: 'flex',
+        marginLeft: 250,
+        marginTop: -85,
+        marginBottom: 30
+    },
+    passwordVisibleIcon: {
+        color: '#d9d9d9'
     }
+
 });

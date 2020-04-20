@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {View, TextInput, Image, Text} from "react-native";
-import {Button, Spinner} from 'native-base';
+import {Button, Spinner, Icon} from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { GUIDEO_API_URL } from 'react-native-dotenv';
@@ -67,6 +67,7 @@ function LoginForm() {
     //Se usará cuando haya Iconbutton (necesitamos libreria para eso)
     const viewpass = () => {
         setShowPassword(showPassword => !showPassword);
+        console.log('changed');
     }
 
     return (<View style={styles.centeredView}>
@@ -95,18 +96,22 @@ function LoginForm() {
                 onChangeText={text => setPassword(text)}
                 editable
             />
+            <Button iconLeft transparent onPress={viewpass} style={styles.passwordVisibleButton}>
+                <Icon style={styles.passwordVisibleIcon}name='eye' />
+            </Button>
             {error ? <Text style={styles.loginErrorText}>The username and or password is not correct!</Text> : null}
             { isFetching ?
             <Spinner color='#4785ff'/>
             :
             <Button
-                style={{width: 300, justifyContent: 'center', backgroundColor: '#4785ff'}}
+                style={styles.loginButton}
                 title="LOGIN"
                 onPress={handleLogin}
             >
                 <Text style={styles.loginButtonText}>LOGIN</Text>
             </Button>
             }
+            <Text>Are you new?</Text>
         </View>
     }</View> )
 
