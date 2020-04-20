@@ -6,7 +6,7 @@ import { getToken } from "../helpers/authHelpers";
 function SettingsScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Settings! Changing this again to trigger Actions</Text>
+            <Text>Settings!</Text>
         </View>
     );
 }
