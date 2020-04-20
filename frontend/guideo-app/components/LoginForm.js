@@ -1,5 +1,8 @@
 import React, {useState, useContext} from 'react';
-import {Text, View, TextInput, Button, Image, Icon} from "react-native";
+import {View, TextInput, Image, Text} from "react-native";
+import {Button, Spinner} from 'native-base';
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
 import {storeToken, removeToken} from '../helpers/authHelpers';
@@ -92,11 +95,18 @@ function LoginForm() {
                 onChangeText={text => setPassword(text)}
                 editable
             />
+            {error ? <Text style={styles.loginErrorText}>The username and or password is not correct!</Text> : null}
+            { isFetching ?
+            <Spinner color='#4785ff'/>
+            :
             <Button
+                style={{width: 300, justifyContent: 'center', backgroundColor: '#4785ff'}}
                 title="LOGIN"
                 onPress={handleLogin}
-            />
-            {error ? <Text>ha habido algun error</Text> : null}
+            >
+                <Text style={styles.loginButtonText}>LOGIN</Text>
+            </Button>
+            }
         </View>
     }</View> )
 

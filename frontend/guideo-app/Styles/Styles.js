@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const styles = StyleSheet.create(
 {
@@ -13,13 +13,12 @@ export const styles = StyleSheet.create(
         marginBottom: 20, 
         width: 300, 
         height: 40, 
-        borderColor: 'gray', 
         borderWidth: 1,
         paddingLeft: 10,
         borderTopColor: 'white',
         borderRightColor: 'white',
         borderLeftColor: 'white',
-        borderBottomColor: '#E0E0E0',
+        borderBottomColor: '#e0e0e0',
         borderBottomWidth: 1.5,
         marginBottom: 40
     },
@@ -33,5 +32,13 @@ export const styles = StyleSheet.create(
         display: 'flex',
         marginTop: -300,
         borderColor: 'black'
+    },
+    loginErrorText : {
+        color: 'red',
+        fontSize: 12
+    },
+    loginButtonText: {
+        color: 'white',
+        fontSize: 20
     }
 });

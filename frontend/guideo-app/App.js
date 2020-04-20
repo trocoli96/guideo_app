@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Image, Text, Button} from 'react-native';
-import Logo from './logo.png';
+import React from 'react';
 import { NavigationContainer} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -26,7 +24,7 @@ export default function App({navigation}) {
                         if (route.name === 'Home') {
                             iconName = focused ? 'ios-home' : 'ios-home';
                         } else if (route.name === 'Settings') {
-                            iconName = focused ? 'ios-settings' : 'ios-settings';
+                            iconName = focused ? 'ios-star' : 'ios-star';
                         } else if (route.name === 'Profile'){
                             iconName = focused ? 'ios-person' : 'ios-person';
                         } else if (route.name === 'Locations'){
