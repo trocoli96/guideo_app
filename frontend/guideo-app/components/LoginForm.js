@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {Text, View, TextInput, Button, Image, Icon} from "react-native";
+import React, {useState} from 'react';
+import {Text, View, TextInput, Button, Image} from "react-native";
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
 import {storeToken, removeToken} from '../helpers/authHelpers';
@@ -40,11 +40,11 @@ function LoginForm({navigation}) {
                 }
                 setError(true);
                 return Promise.reject(response.status);
-            })
-            .then(async (data) => {
+            }).then(async (data) => {
                 const tokenSuccessfullyStored = await storeToken(data['access_token']);
                 if (tokenSuccessfullyStored) {
                     setLoggedIn(true);
+
                 }
                 setIsFetching(false);
             }).catch(error => {
