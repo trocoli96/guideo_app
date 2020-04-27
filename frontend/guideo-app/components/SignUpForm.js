@@ -10,7 +10,7 @@ export default function SignupForm({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
-    const [IsFetching, setIsFetching] = useState(false);
+    const [isFetching, setIsFetching] = useState(false);
     const [loginAfterSignup, setLoginAfterSignup] = useState(false);
 
     const data = {
@@ -40,19 +40,23 @@ export default function SignupForm({navigation}) {
         return fetch(url, options)
             .then(response => {
                 if (response.ok) {
-                    console.log(response.status)
-                    return response.json;
+                    console.log(response.status);
+                    return response.json();
 
                 }
                 setError(true);
                 return Promise.reject(response.status);
-            }).then((data) => {
-                const getToken = storeToken(data['access_token']);
-                if (getToken) {
+            }).then(async ( data) => {
+                const tokenSuccessfullyStored = await storeToken(data['access_token']);
+                if (tokenSuccessfullyStored) {
                     setLoginAfterSignup(true);
+                    setIsFetching(false);
+                    setTimeout(()=> returnHome(), 3500) ;
+                } else {
+                    setError(true);
+                    setIsFetching(false);
                 }
-                setIsFetching(false);
-                setTimeout(()=> returnHome(), 3500) ;
+
             }).catch(error => {
                 console.log(error);
                 setIsFetching(false);
@@ -91,7 +95,7 @@ export default function SignupForm({navigation}) {
                         style={styles.formTextInput}
                         textContentType="emailAddress"
                         autoCompleteType="email"
-                        placeholder="Email"
+                        placeholder="email@adress.com"
                         keyboardType="email-address"
                         onChangeText={text => setEmail(text)}
                         editable
@@ -111,7 +115,8 @@ export default function SignupForm({navigation}) {
                         onPress={HandleOfSubmit}
                     />
 
-                    {error ? <Text>There are some error in the signup process</Text> : null}
+                    {error ?
+                        <Text>There was an error in the signup process</Text> : null}
                 </View>}
         </View>);
 }
