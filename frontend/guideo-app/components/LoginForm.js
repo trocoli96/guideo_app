@@ -1,10 +1,10 @@
-import React, {useState, useContext} from 'react';
-import {Text, View, TextInput, Button, Image, Icon} from "react-native";
+import React, {useState} from 'react';
+import {Text, View, TextInput, Button, Image} from "react-native";
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
 import {storeToken, removeToken} from '../helpers/authHelpers';
 
-function LoginForm() {
+function LoginForm({navigation}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -40,11 +40,11 @@ function LoginForm() {
                 }
                 setError(true);
                 return Promise.reject(response.status);
-            })
-            .then(async (data) => {
+            }).then(async (data) => {
                 const tokenSuccessfullyStored = await storeToken(data['access_token']);
                 if (tokenSuccessfullyStored) {
                     setLoggedIn(true);
+
                 }
                 setIsFetching(false);
             }).catch(error => {
@@ -97,8 +97,18 @@ function LoginForm() {
                 onPress={handleLogin}
             />
             {error ? <Text>ha habido algun error</Text> : null}
+
+            <View style={{marginTop:20,alignItem:'center',justifyContent:'center'}}>
+                <Text>Don't have an account? </Text>
+                <Button
+                title="Signup"
+                onPress={()=> navigation.navigate('Signup')}>
+                </Button>
+
+            </View>
         </View>
     }</View> )
+
 
 
 }

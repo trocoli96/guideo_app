@@ -10,7 +10,6 @@ export const styles = StyleSheet.create(
         backgroundColor: '#fff'
     },
     formTextInput: {
-        marginBottom: 20, 
         width: 300, 
         height: 40, 
         borderColor: 'gray', 
