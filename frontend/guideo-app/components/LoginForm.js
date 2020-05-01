@@ -1,13 +1,10 @@
-import React, {useState, useContext} from 'react';
-import {View, TextInput, Image, Text} from "react-native";
-import {Button, Spinner, Icon} from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import React, {useState} from 'react';
+import {Text, View, TextInput, Button, Image} from "react-native";
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
 import {storeToken, removeToken} from '../helpers/authHelpers';
 
-function LoginForm() {
+function LoginForm({navigation}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -43,11 +40,11 @@ function LoginForm() {
                 }
                 setError(true);
                 return Promise.reject(response.status);
-            })
-            .then(async (data) => {
+            }).then(async (data) => {
                 const tokenSuccessfullyStored = await storeToken(data['access_token']);
                 if (tokenSuccessfullyStored) {
                     setLoggedIn(true);
+
                 }
                 setIsFetching(false);
             }).catch(error => {
@@ -67,7 +64,6 @@ function LoginForm() {
     //Se usará cuando haya Iconbutton (necesitamos libreria para eso)
     const viewpass = () => {
         setShowPassword(showPassword => !showPassword);
-        console.log('changed');
     }
 
     return (<View style={styles.centeredView}>
@@ -96,24 +92,23 @@ function LoginForm() {
                 onChangeText={text => setPassword(text)}
                 editable
             />
-            <Button iconLeft transparent onPress={viewpass} style={styles.passwordVisibleButton}>
-                <Icon style={styles.passwordVisibleIcon}name='eye' />
-            </Button>
-            {error ? <Text style={styles.loginErrorText}>The username and or password is not correct!</Text> : null}
-            { isFetching ?
-            <Spinner color='#4785ff'/>
-            :
             <Button
-                style={styles.loginButton}
                 title="LOGIN"
                 onPress={handleLogin}
-            >
-                <Text style={styles.loginButtonText}>LOGIN</Text>
-            </Button>
-            }
-            <Text>Are you new?</Text>
+            />
+            {error ? <Text>ha habido algun error</Text> : null}
+
+            <View style={{marginTop:20,alignItem:'center',justifyContent:'center'}}>
+                <Text>Don't have an account? </Text>
+                <Button
+                title="Signup"
+                onPress={()=> navigation.navigate('Signup')}>
+                </Button>
+
+            </View>
         </View>
     }</View> )
+
 
 
 }
