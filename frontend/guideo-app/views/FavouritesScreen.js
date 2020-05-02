@@ -3,12 +3,12 @@ import React from "react";
 import { getToken } from "../helpers/authHelpers";
 
 
-function SettingsScreen() {
+function FavouritesScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Settings!</Text>
+            <Text>Favourites!</Text>
         </View>
     );
 }
 
-export default SettingsScreen;
+export default FavouritesScreen;

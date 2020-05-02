@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Image, Text, Button} from 'react-native';
-import Logo from './logo.png';
+import React from 'react';
 import { NavigationContainer} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from "./views/HomeScreen";
-import SettingsScreen from "./views/SettingsScreen";
+import SettingsScreen from "./views/FavouritesScreen";
 import MyProfileScreen from "./views/MyProfileScreen";
 import ListLocationsScreen from "./views/ListLocationsScreen";
 import LanguageScreen from "./views/LanguageScreen";
+import FavouritesScreen from './views/FavouritesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +25,7 @@ export default function App({navigation}) {
                         if (route.name === 'Home') {
                             iconName = focused ? 'ios-home' : 'ios-home';
                         } else if (route.name === 'Settings') {
-                            iconName = focused ? 'ios-settings' : 'ios-settings';
+                            iconName = focused ? 'ios-star' : 'ios-star';
                         } else if (route.name === 'Profile'){
                             iconName = focused ? 'ios-person' : 'ios-person';
                         } else if (route.name === 'Locations'){
@@ -49,7 +48,7 @@ export default function App({navigation}) {
                     }
                 }}
             >
-                <Tab.Screen name="Settings" component={SettingsScreen} />
+                <Tab.Screen name="Settings" component={FavouritesScreen} />
                 <Tab.Screen name="Locations" component={ListLocationsScreen} />
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Language" component={LanguageScreen} />
