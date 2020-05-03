@@ -1,6 +1,7 @@
 import {Text, View} from "react-native";
 import React, {useState, useEffect} from "react";
 import * as Location from 'expo-location';
+import NearPoisList from "../components/NearPoisList";
 
 function ListLocationsScreen() {
 
@@ -30,6 +31,7 @@ function ListLocationsScreen() {
                         <Text>hola</Text>
                         <Text>{locationData.longitude}</Text>
                         <Text>{locationData.latitude}</Text>
+                        <NearPoisList/>
                     </View>
                 </View>
             );
