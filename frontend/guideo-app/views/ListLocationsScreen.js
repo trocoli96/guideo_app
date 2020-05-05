@@ -31,7 +31,7 @@ function ListLocationsScreen() {
                         <Text>hola</Text>
                         <Text>{locationData.longitude}</Text>
                         <Text>{locationData.latitude}</Text>
-                        <NearPoisList/>
+                        <NearPoisList {...locationData}/>
                     </View>
                 </View>
             );
