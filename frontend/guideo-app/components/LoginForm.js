@@ -73,7 +73,7 @@ function LoginForm({navigation}) {
         </View>
             : 
         <View style={styles.centeredView}>
-            <Image style={styles.logo} source={require('../logo.png')}/>
+            <Image style={styles.logo} source={require('../Resources/logo.png')}/>
             <TextInput
                 style={styles.formTextInput}
                 placeholder="Email"

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Platform} from 'react-native';
 
+
 export const styles = StyleSheet.create(
 {
     centeredView: {
@@ -55,6 +56,35 @@ export const styles = StyleSheet.create(
     },
     passwordVisibleIcon: {
         color: '#d9d9d9'
+    },
+    scrollView: {
+        flex: 1,
+    },
+    containerSafeArea: {
+        flex: 1,
+    },
+    backgroundImage: {
+        width: '100%',
+        flex: 1,
+        resizeMode: "cover",
+    },
+    searchPoisBar: {
+        width:'90%',
+        fontFamily: (Platform.OS === 'ios') ? 'Verdana' : 'Roboto',
+        fontSize: 20,
+        height: 60,
+        borderWidth: 1.5,
+        borderBottomWidth: 3,
+        paddingLeft: 5,
+        borderTopColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderLeftColor: 'transparent',
+        borderBottomColor: 'white',
+        marginBottom: 40,
+    },
+    buttonCloseToMe: {
+        width: '60%',
+        flexDirection: 'column'
     }
 
 });

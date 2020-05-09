@@ -1,23 +1,24 @@
 import React, {useEffect, useState} from "react";
 import {GUIDEO_API_URL} from 'react-native-dotenv';
-import {Button, Text, View} from 'react-native';
-import {getToken} from '../helpers/authHelpers';
+import {Button, Text, View, ScrollView, RefreshControl} from 'react-native';
+import {Card, CardItem, Image, Body, Spinner, SafeAreaView} from "native-base";
+import {styles} from "../Styles/Styles";
 
 
 function NearPoisList(props){
 
     const [pois, setPois] = useState([]);
     const [error, setError] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const [reload, setReload] = useState(1);
-
     const data = JSON.stringify({
-        lat: `${props.latitude}`,
-        lng: `${props.longitude}`
+        lat: `${props.route.params.lat}`,
+        lng: `${props.route.params.lon}`
     });
 
 
     useEffect( () => {
-        (async() => {
+        setRefreshing(true);
             const url = GUIDEO_API_URL + '/api/locations';
             const options = {
                 method: "POST",
@@ -25,7 +26,6 @@ function NearPoisList(props){
                 headers: new Headers({
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + await getToken()
                 }),
                 mode: "cors"
             };
@@ -38,6 +38,7 @@ function NearPoisList(props){
                         return Promise.reject(response.status);
                     })
                     .then(data => {
+                        setRefreshing(false);
                         return setPois(data);
                     })
                     .catch(err => {
@@ -47,28 +48,36 @@ function NearPoisList(props){
                     });
             };
             fetchData();
-        }) ()
     }, [reload]) ;
 
     const handleReload = () => {
         setReload(reload + 1);
     };
 
-
-    return (<View>
-            {pois.map((poi) =>{
-                return <View key={poi.id}><Text>{poi.description}</Text></View>
-            })}
-            <Button onPress={handleReload} title={"hola"}/>
+    return (<View style={{flex: 1}}>
+                    <ScrollView
+                        contentContainerStyle={styles.scrollView}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={handleReload} />
+                        }
+                    >
+                    {
+                        pois.map((poi) => {
+                            return <View key={poi.id}>
+                                <Card style={{flex: 0}}>
+                                    <CardItem style={{width: 200}}>
+                                        <Body>
+                                            <Text>{poi.description}</Text>
+                                        </Body>
+                                    </CardItem>
+                                </Card>
+                            </View>
+                        })
+                    }
+                    </ScrollView>
         </View>
 
     );
-
-
-
-
-
-
 }
 
 
