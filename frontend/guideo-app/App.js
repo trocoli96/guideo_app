@@ -25,6 +25,7 @@ export default function App({navigation}) {
         (async () => {
             let { status } = await Location.requestPermissionsAsync();
             if (status !== 'granted') {
+                // TODO add here the logic in case user rejects location permission
                 setErrorMsg('Permission to access location was denied');
             }
             let location = await Location.getCurrentPositionAsync({accuracy: 1});
