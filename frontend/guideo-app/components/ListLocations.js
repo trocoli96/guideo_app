@@ -35,9 +35,7 @@ function ListLocations({route, navigation}) {
     return (       
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     {loading ?
-                        <View>
                             <AppLoading />
-                        </View>
                         :
                         <ImageBackground source={require("../Resources/ListLocations-image.jpg")}
                                          style={styles.backgroundImage}>

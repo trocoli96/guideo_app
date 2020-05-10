@@ -11,7 +11,7 @@ function NearPoisList(props){
     const [error, setError] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [reload, setReload] = useState(1);
-    const data = JSON.stringify({
+    const data = ({
         lat: `${props.route.params.lat}`,
         lon: `${props.route.params.lon}`
     });
@@ -23,7 +23,7 @@ function NearPoisList(props){
             const url = GUIDEO_API_URL + '/api/locations';
             const options = {
                 method: "POST",
-                body: data,
+                body: JSON.stringify(data),
                 headers: new Headers({
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function NearPoisList(props){
                                                                                                               style={{
                                                                                                                   paddingTop: 2,
                                                                                                                   paddingLeft: 4
-                                                                                                              }}>01:30</Text>
+                                                                                                              }}>01:40</Text>
                                         </View>
                                     </Body>
                                 </CardItem>
