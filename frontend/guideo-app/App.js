@@ -20,6 +20,7 @@ export default function App({navigation}) {
         "lat": null
         });
 
+    //We will load since the beginning our main location to send it as params to each component and use it for fetching, etc..
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestPermissionsAsync();
@@ -70,7 +71,9 @@ export default function App({navigation}) {
             >
                 <Tab.Screen name="Settings" component={FavouritesScreen} />
                 <Tab.Screen name="Locations">
-                    {() => <ExploreScreen {...locationData} />}
+                    {() => <ExploreScreen
+                        //Sending here location params to all the child components inside this view
+                        {...locationData} />}
                 </Tab.Screen>
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Language" component={LanguageScreen} />

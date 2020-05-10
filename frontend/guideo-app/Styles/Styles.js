@@ -70,7 +70,7 @@ export const styles = StyleSheet.create(
     },
     searchPoisBar: {
         width:'90%',
-        fontFamily: (Platform.OS === 'ios') ? 'Verdana' : 'Roboto',
+        fontFamily: (Platform.OS === 'ios') ? 'Verdana' : null,
         fontSize: 20,
         height: 60,
         borderWidth: 1.5,
@@ -85,6 +85,13 @@ export const styles = StyleSheet.create(
     buttonCloseToMe: {
         width: '60%',
         flexDirection: 'column'
+    },
+    cardListLocations: {
+        flex:0,
+        marginRight: 10,
+        marginTop: 5,
+        marginBottom: 10,
+        marginLeft: 10
     }
 
 });

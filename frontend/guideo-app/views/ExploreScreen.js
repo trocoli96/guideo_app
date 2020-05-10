@@ -6,11 +6,11 @@ import {Image} from 'react-native';
 
 const Stack = createStackNavigator();
 
-
+//The only way to take the logo and don't crash in IOS and Android
 function LogoTitle() {
     return (
         <Image
-            style={{ width: 200, height: 90 }}
+            style={{ width: 180, height: 60, resizeMode: 'contain' }}
             source={require('../Resources/logo-letters.png')}
         />
     );
@@ -29,7 +29,7 @@ function ExploreScreen(props){
                     headerTransparent: true,
                     headerTitle: props => <LogoTitle {...props} />,
                     headerStyle: {
-                        height: 130
+                        height: 100
                     }
                 }}
                 name="Explore"
