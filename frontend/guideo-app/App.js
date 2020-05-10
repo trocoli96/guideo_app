@@ -1,18 +1,40 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavigationContainer} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from "./views/HomeScreen";
-import SettingsScreen from "./views/FavouritesScreen";
 import MyProfileScreen from "./views/MyProfileScreen";
-import ListLocationsScreen from "./views/ListLocationsScreen";
 import LanguageScreen from "./views/LanguageScreen";
 import FavouritesScreen from './views/FavouritesScreen';
+import ExploreScreen from "./views/ExploreScreen";
+import * as Location from "expo-location";
 
 const Tab = createBottomTabNavigator();
 
 
 export default function App({navigation}) {
+
+      const [errorMsg, setErrorMsg] = useState(null);
+      const [locationData, setLocationData] = useState({
+        "lon": null,
+        "lat": null
+        });
+
+    //We will load since the beginning our main location to send it as params to each component and use it for fetching, etc..
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestPermissionsAsync();
+            if (status !== 'granted') {
+                // TODO add here the logic in case user rejects location permission
+                setErrorMsg('Permission to access location was denied');
+            }
+            let location = await Location.getCurrentPositionAsync({accuracy: 1});
+            setLocationData({
+                "lon": location.coords.longitude,
+                "lat": location.coords.latitude,
+            });
+        })();
+    },[]);
 
     return (
         <NavigationContainer>
@@ -49,7 +71,11 @@ export default function App({navigation}) {
                 }}
             >
                 <Tab.Screen name="Settings" component={FavouritesScreen} />
-                <Tab.Screen name="Locations" component={ListLocationsScreen} />
+                <Tab.Screen name="Locations">
+                    {() => <ExploreScreen
+                        //Sending here location params to all the child components inside this view
+                        {...locationData} />}
+                </Tab.Screen>
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Language" component={LanguageScreen} />
                 <Tab.Screen name="Profile" component={MyProfileScreen} />

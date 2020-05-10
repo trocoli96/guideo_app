@@ -71,7 +71,7 @@ export default function SignupForm({navigation}) {
                     <Text>Signup done, welcome to Guideo! :)</Text>
                 </View> :
                 <View style={styles.centeredView}>
-                    <Image style={styles.logo} source={require('../logo.png')}/>
+                    <Image style={styles.logo} source={require('../Resources/logo.png')}/>
                     <TextInput
                         style={styles.formTextInput}
                         textContentType="name"

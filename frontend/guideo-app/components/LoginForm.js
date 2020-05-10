@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, TextInput, Button, Image} from "react-native";
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
-import {storeToken, removeToken} from '../helpers/authHelpers';
+import {storeToken, removeToken, getToken} from '../helpers/authHelpers';
 
 function LoginForm({navigation}) {
 
@@ -44,7 +44,6 @@ function LoginForm({navigation}) {
                 const tokenSuccessfullyStored = await storeToken(data['access_token']);
                 if (tokenSuccessfullyStored) {
                     setLoggedIn(true);
-
                 }
                 setIsFetching(false);
             }).catch(error => {
@@ -74,7 +73,7 @@ function LoginForm({navigation}) {
         </View>
             : 
         <View style={styles.centeredView}>
-            <Image style={styles.logo} source={require('../logo.png')}/>
+            <Image style={styles.logo} source={require('../Resources/logo.png')}/>
             <TextInput
                 style={styles.formTextInput}
                 placeholder="Email"

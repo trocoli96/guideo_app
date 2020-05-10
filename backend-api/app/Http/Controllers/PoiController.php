@@ -17,17 +17,17 @@ class PoiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['getLocations']]);
     }
 
     public function createPoi(Request $request){
 
-        $data = $request->all();   
-        
+        $data = $request->all();
+
         $userId = Auth::id();
 
-        $lon = $data['longitude'];
-        $lat = $data['latitude'];
+        $lon = $data['lon'];
+        $lat = $data['lat'];
         $radius = 0.2; // Km
 
         // Every lat|lon degree° is ~ 111Km
@@ -38,9 +38,9 @@ class PoiController extends Controller
         $max_lon = $lon - $angle_radius;
         $min_lon = $lon + $angle_radius;
 
-        $possibleexistinglocation = DB::table("location")
-        ->whereBetween('longitude', [$min_lon, $max_lon])
-        ->whereBetween('latitude', [$min_lat, $max_lat])
+        $possibleexistinglocation = DB::table("poi")
+        ->whereBetween('lon', [$min_lon, $max_lon])
+        ->whereBetween('lat', [$min_lat, $max_lat])
         ->get();
 
         $numberofexistinglocation = sizeof($possibleexistinglocation);
@@ -52,43 +52,23 @@ class PoiController extends Controller
         $createdPoi = Poi::create([
             'id' => $poiGeneratedId = Poi::generateID(),
             'submitter_id' => $userId,
+            'lon' => $lon,
+            'lat' => $lat,
+            'lng' => $request ['lng'],
             'name' => $request['name'],
             'description' => $request['description']
         ]);
 
-        $locationRequest = [
-            'poi_id' => $poiGeneratedId,
-            'longitude' => $request['longitude'],
-            'latitude' => $request['latitude'],
-            'name' => $createdPoi['name']
-        ];
-
-       return $this->createLocation($locationRequest);
-    }
-
-    public function createLocation($locationRequest){
-
-        $userId = Auth::id();
-
-        $createdLocation = new Location;
-        $createdLocation->id = $locationGeneratedId = Location::generateID();
-        $createdLocation->longitude = $locationRequest['longitude'];
-        $createdLocation->latitude = $locationRequest['latitude'];
-        $createdLocation->author_id = $userId;
-        $createdLocation->poi_id = $locationRequest['poi_id'];
-
-        $createdLocation->save();
-
-        return response()->json($createdLocation, 200);
+       return response()->json($createdPoi,200);
     }
 
     public function getLocations(Request $request){
 
         $data = $request->all();
 
-        $lon = $data['longitude'];
-        $lat = $data['latitude'];
-        $radius = 20; // Km
+        $lon = $data['lon'];
+        $lat = $data['lat'];
+        $radius = 50; // Km
 
         // Every lat|lon degree° is ~ 111Km
         $angle_radius = $radius / ( 111 * cos( $lon ) );
@@ -98,9 +78,9 @@ class PoiController extends Controller
         $max_lon = $lon - $angle_radius;
         $min_lon = $lon + $angle_radius;
 
-        $locations = DB::table("location")
-            ->whereBetween('longitude', [$min_lon, $max_lon])
-            ->whereBetween('latitude', [$min_lat, $max_lat])
+        $locations = DB::table("poi")
+            ->whereBetween('lon', [$min_lon, $max_lon])
+            ->whereBetween('lat', [$min_lat, $max_lat])
             ->get();
 
         return response()->json($locations,200);
@@ -108,10 +88,10 @@ class PoiController extends Controller
     }
 
     public function getPoiById(Request $request, $id){
-  
+
         $poi = DB::table("poi")
         ->where('id', "=", $id)
-        ->get();
+        ->first();
 
         return response()->json($poi,200);
 
