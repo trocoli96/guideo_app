@@ -15,7 +15,7 @@ class Poi extends Model
 
 
     protected $fillable = [
-        'id', 'name', 'lng', 'lat', 'language', 'description', 'user_id', 'created_at', 'submitter_id'
+        'id', 'name', 'lon', 'lat', 'lng', 'description', 'user_id', 'created_at', 'submitter_id'
     ];
 
     protected $guarded = [

@@ -13,7 +13,7 @@ function NearPoisList(props){
     const [reload, setReload] = useState(1);
     const data = JSON.stringify({
         lat: `${props.route.params.lat}`,
-        lng: `${props.route.params.lon}`
+        lon: `${props.route.params.lon}`
     });
 
 

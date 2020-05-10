@@ -26,20 +26,20 @@ class PoiController extends Controller
 
         $userId = Auth::id();
 
-        $lng = $data['lng'];
+        $lon = $data['lon'];
         $lat = $data['lat'];
         $radius = 0.2; // Km
 
         // Every lat|lon degree° is ~ 111Km
-        $angle_radius = $radius / ( 111 * cos( $lng ) );
+        $angle_radius = $radius / ( 111 * cos( $lon ) );
 
         $max_lat = $lat - $angle_radius;
         $min_lat = $lat + $angle_radius;
-        $max_lng = $lng - $angle_radius;
-        $min_lng = $lng + $angle_radius;
+        $max_lon = $lon - $angle_radius;
+        $min_lon = $lon + $angle_radius;
 
         $possibleexistinglocation = DB::table("poi")
-        ->whereBetween('lng', [$min_lng, $max_lng])
+        ->whereBetween('lon', [$min_lon, $max_lon])
         ->whereBetween('lat', [$min_lat, $max_lat])
         ->get();
 
@@ -52,9 +52,9 @@ class PoiController extends Controller
         $createdPoi = Poi::create([
             'id' => $poiGeneratedId = Poi::generateID(),
             'submitter_id' => $userId,
-            'lng' => $lng,
+            'lon' => $lon,
             'lat' => $lat,
-            'language' => $request ['language'],
+            'lng' => $request ['lng'],
             'name' => $request['name'],
             'description' => $request['description']
         ]);
@@ -66,7 +66,7 @@ class PoiController extends Controller
 
         $data = $request->all();
 
-        $lon = $data['lng'];
+        $lon = $data['lon'];
         $lat = $data['lat'];
         $radius = 50; // Km
 
@@ -79,7 +79,7 @@ class PoiController extends Controller
         $min_lon = $lon + $angle_radius;
 
         $locations = DB::table("poi")
-            ->whereBetween('lng', [$min_lon, $max_lon])
+            ->whereBetween('lon', [$min_lon, $max_lon])
             ->whereBetween('lat', [$min_lat, $max_lat])
             ->get();
 
@@ -91,7 +91,7 @@ class PoiController extends Controller
 
         $poi = DB::table("poi")
         ->where('id', "=", $id)
-        ->get();
+        ->first();
 
         return response()->json($poi,200);
 
