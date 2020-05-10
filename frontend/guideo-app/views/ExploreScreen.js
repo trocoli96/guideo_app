@@ -30,7 +30,8 @@ function ExploreScreen(props){
                     headerTitle: props => <LogoTitle {...props} />,
                     headerStyle: {
                         height: 100
-                    }
+                    },
+                    headerTitleAlign: "center"
                 }}
                 name="Explore"
                 component={ListLocations}
