@@ -23,6 +23,7 @@ export default function SignupForm({navigation}) {
     function returnHome() {
         navigation.navigate('Home');
     }
+
     const HandleOfSubmit = async () => {
         setError(false);
         setIsFetching(true);

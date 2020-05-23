@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useReducer} from 'react';
 import { NavigationContainer} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,17 +8,19 @@ import LanguageScreen from "./views/LanguageScreen";
 import FavouritesScreen from './views/FavouritesScreen';
 import ExploreScreen from "./views/ExploreScreen";
 import * as Location from "expo-location";
+import {FavouritesContext} from "./helpers/FavouritesContext";
+import {FavouritesReducer} from "./helpers/FavouritesReducer";
 
 const Tab = createBottomTabNavigator();
 
-
 export default function App({navigation}) {
 
-      const [errorMsg, setErrorMsg] = useState(null);
-      const [locationData, setLocationData] = useState({
+    const [favourite, dispatch] = FavouritesReducer();
+    const [errorMsg, setErrorMsg] = useState(null);
+    const [locationData, setLocationData] = useState({
         "lon": null,
         "lat": null
-        });
+    });
 
     //We will load since the beginning our main location to send it as params to each component and use it for fetching, etc..
     useEffect(() => {
@@ -36,6 +38,9 @@ export default function App({navigation}) {
     },[]);
 
     return (
+        <FavouritesContext.Provider
+            value={{favourite, dispatch}}
+        >
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName={'Home'}
@@ -80,6 +85,8 @@ export default function App({navigation}) {
                 <Tab.Screen name="Profile" component={MyProfileScreen} />
             </Tab.Navigator>
         </NavigationContainer>
+        </FavouritesContext.Provider>
+
     );
 
 };

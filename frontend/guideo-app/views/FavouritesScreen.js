@@ -1,13 +1,19 @@
-import {Text, View} from "react-native";
-import React from "react";
-import { getToken } from "../helpers/authHelpers";
+import React, {useContext, useState} from "react";
+import {FavouritesContext} from "../helpers/FavouritesContext";
+import FavouritesList from "../components/FavouritesList";
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 
 function FavouritesScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Favourites!</Text>
-        </View>
+
+    return (<Stack.Navigator>
+            <Stack.Screen
+                name="Favourites"
+                component={FavouritesList}
+                />
+        </Stack.Navigator>
     );
 }
 
