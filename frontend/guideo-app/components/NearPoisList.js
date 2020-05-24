@@ -1,9 +1,7 @@
 import React, {useEffect, useState, useContext} from "react";
 import {GUIDEO_API_URL} from 'react-native-dotenv';
-import {Button, View, ScrollView, RefreshControl} from 'react-native';
-import {Card, CardItem, Body, Text, Title, Icon} from "native-base";
+import {View, ScrollView} from 'react-native';
 import {styles} from "../Styles/Styles";
-import {FavouritesContext} from "../helpers/FavouritesContext";
 import PoiCard from "../components/PoiCard";
 import {AppLoading} from "expo";
 
@@ -61,7 +59,8 @@ function NearPoisList(props){
                 >
                     {
                         pois.map((poi) => {
-                            return <PoiCard {...poi} setFavourite={false} key={`${poi.id}`}/>
+                            //We send the information from the poi with a key value in this case the ID
+                            return <PoiCard {...poi} key={`${poi.id}`}/>
                         })
                     }
                 </ScrollView>

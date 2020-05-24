@@ -14,6 +14,8 @@ function PoiCard(props) {
     const favourites = useContext(FavouritesContext);
     const [alreadyFavourite, setAlreadyFavourite] = useState(false);
 
+
+    //Determine the state of each poi, if it's founded in the reducer, alreadyFavourite is true
     useEffect(() => {
         if (favourites.favourite.favourites === null){
             setAlreadyFavourite(false);
@@ -22,7 +24,8 @@ function PoiCard(props) {
         const index = favourites.favourite.favourites.findIndex(x => x.id === toRemove);
         return setAlreadyFavourite(index > -1);
     });
-
+    
+    //Action for the poi to add it as a poi or remove it in case the state in already favourite is false
     const handleFavourite = () => {
         if (alreadyFavourite === false) {
             favourites.dispatch({type: "add-favourite", props})

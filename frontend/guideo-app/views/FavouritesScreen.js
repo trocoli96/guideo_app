@@ -1,5 +1,4 @@
-import React, {useContext, useState} from "react";
-import {FavouritesContext} from "../helpers/FavouritesContext";
+import React from "react";
 import FavouritesList from "../components/FavouritesList";
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -7,6 +6,8 @@ const Stack = createStackNavigator();
 
 
 function FavouritesScreen() {
+
+    //For now this component is just to add a title "Favourites" in the Favourites Screen, then in case of routing it will be possible
 
     return (<Stack.Navigator>
             <Stack.Screen

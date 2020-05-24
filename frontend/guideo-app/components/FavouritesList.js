@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {styles} from "../Styles/Styles";
 import PoiCard from "./PoiCard";
 import {ScrollView, View} from "react-native";
@@ -9,7 +9,6 @@ import {FavouritesContext} from "../helpers/FavouritesContext";
 function FavouritesList(){
 
     const favourites = useContext(FavouritesContext);
-    const [favourite, setFavourite] = useState(true);
 
     return(
         <View style={{ flex: 1}}>

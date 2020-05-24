@@ -15,7 +15,9 @@ const Tab = createBottomTabNavigator();
 
 export default function App({navigation}) {
 
+    //Declare the reducer to send it to all the child components
     const [favourite, dispatch] = FavouritesReducer();
+
     const [errorMsg, setErrorMsg] = useState(null);
     const [locationData, setLocationData] = useState({
         "lon": null,
