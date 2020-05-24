@@ -8,6 +8,7 @@ import {FavouritesContext} from "../helpers/FavouritesContext";
 
 function FavouritesList(){
 
+    //we get the favourites from the context in App.js to map each poi with the same component as in ExploreScreen
     const favourites = useContext(FavouritesContext);
 
     return(
