@@ -6,32 +6,30 @@ import {FavouritesContext} from "../helpers/FavouritesContext";
 import { Ionicons } from "@expo/vector-icons";
 
 
-/**
- * @return {boolean}
- */
+
 function PoiCard(props) {
 
-    const favourites = useContext(FavouritesContext);
+    const favouritesContext = useContext(FavouritesContext);
     const [alreadyFavourite, setAlreadyFavourite] = useState(false);
 
 
     //Determine the state of each poi, if it's founded in the reducer, alreadyFavourite is true
     useEffect(() => {
-        if (favourites.favourite.favourites === null){
-            setAlreadyFavourite(false);
+        if (favouritesContext.favouritesList.favourites === null){
+            return setAlreadyFavourite(false); // añado return para saltarnos el resto
         }
-        const toRemove = props.id;
-        const index = favourites.favourite.favourites.findIndex(x => x.id === toRemove);
-        return setAlreadyFavourite(index > -1);
+        // if our id is found on the id's list, then setAlreadyFavourite will be true
+        const found = favouritesContext.favouritesList.favourites.find(item => item.id === props.id);
+        return setAlreadyFavourite(found !== undefined);
     });
     
     //Action for the poi to add it as a poi or remove it in case the state in already favourite is false
     const handleFavourite = () => {
-        if (alreadyFavourite === false) {
-            favourites.dispatch({type: "add-favourite", props})
+        if (!alreadyFavourite) {
+            favouritesContext.dispatch({type: "add-favourite", props})
             return setAlreadyFavourite(true);
         }
-        favourites.dispatch({type: "remove-favourite", props})
+        favouritesContext.dispatch({type: "remove-favourite", props})
         return setAlreadyFavourite(false);
 
     };

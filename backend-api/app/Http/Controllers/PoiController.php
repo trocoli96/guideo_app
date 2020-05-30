@@ -66,9 +66,11 @@ class PoiController extends Controller
 
         $data = $request->all();
 
-        $lon = $data['lon'];
-        $lat = $data['lat'];
-        $radius = 50; // Km
+        $lon = $request->input('query.lon');
+        $lat = $request->input('query.lat');
+        $onlyCoordinates = $data['only_coordinates'] ?? false;
+        $pagination = $data['paginate'];
+        $radius = 100; // Km
 
         // Every lat|lon degree° is ~ 111Km
         $angle_radius = $radius / ( 111 * cos( $lon ) );
@@ -78,10 +80,17 @@ class PoiController extends Controller
         $max_lon = $lon - $angle_radius;
         $min_lon = $lon + $angle_radius;
 
-        $locations = DB::table("poi")
+
+        $query = DB::table("poi")
             ->whereBetween('lon', [$min_lon, $max_lon])
-            ->whereBetween('lat', [$min_lat, $max_lat])
-            ->get();
+            ->whereBetween('lat', [$min_lat, $max_lat]);
+
+        if($onlyCoordinates == true){
+            $query->select('id', 'lon', 'lat');
+        }
+
+        $locations = $query
+            ->paginate($pagination);
 
         return response()->json($locations,200);
 

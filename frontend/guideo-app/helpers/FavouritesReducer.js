@@ -19,11 +19,8 @@ const reducer = (state = initialState, action) => {
         newState.favourites.push(action.props);
     }
     if (action.type === "remove-favourite"){
-        const toRemove = action.props.id;
-        const index = newState.favourites.findIndex(x => x.id === toRemove);
-        if (index > -1){
-            newState.favourites.splice(index, 1);
-        }
+        const objectToRemove = action.props.id;
+        newState.favourites = newState.favourites.filter(favourite => favourite.id !== objectToRemove);
     }
     return newState
 
