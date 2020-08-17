@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState} from "react";
 import {GUIDEO_API_URL} from 'react-native-dotenv';
 import {View, ScrollView} from 'react-native';
 import {styles} from "../Styles/Styles";
@@ -12,8 +12,11 @@ function NearPoisList(props){
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     const data = ({
-        lat: `${props.route.params.lat}`,
-        lon: `${props.route.params.lon}`
+        query: {
+            lat: `${props.route.params.lat}`,
+            lon: `${props.route.params.lon}`
+        },
+        paginate: 30
     });
 
     useEffect( () => {
@@ -39,7 +42,7 @@ function NearPoisList(props){
                     })
                     .then(data => {
                         setLoading(false);
-                        return setPois(data);
+                        return setPois(data.data);
                     })
                     .catch(err => {
                         if (error === 401){
@@ -60,7 +63,7 @@ function NearPoisList(props){
                     {
                         pois.map((poi) => {
                             //We send the information from the poi with a key value in this case the ID
-                            return <PoiCard {...poi} key={`${poi.id}`}/>
+                            return <PoiCard {...poi} key={poi.id}/>
                         })
                     }
                 </ScrollView>

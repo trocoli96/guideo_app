@@ -16,12 +16,12 @@ const Tab = createBottomTabNavigator();
 export default function App({navigation}) {
 
     //Declare the reducer to send it to all the child components
-    const [favourite, dispatch] = FavouritesReducer();
+    const [favouritesList, dispatch] = FavouritesReducer();
 
     const [errorMsg, setErrorMsg] = useState(null);
     const [locationData, setLocationData] = useState({
-        "lon": null,
-        "lat": null
+        "lon": Number(null),
+        "lat": Number(null)
     });
 
     //We will load since the beginning our main location to send it as params to each component and use it for fetching, etc..
@@ -42,7 +42,7 @@ export default function App({navigation}) {
 
     return (
         <FavouritesContext.Provider
-            value={{favourite, dispatch}}
+            value={{favouritesList, dispatch}}
         >
         <NavigationContainer>
             <Tab.Navigator
@@ -83,7 +83,11 @@ export default function App({navigation}) {
                         //Sending here location params to all the child components inside this view
                         {...locationData} />}
                 </Tab.Screen>
-                <Tab.Screen name="Home" component={HomeScreen} />
+                <Tab.Screen name="Home">
+                    {() => <HomeScreen
+                        //Sending here location params to all the child components inside this view
+                        {...locationData} />}
+                </Tab.Screen>
                 <Tab.Screen name="Language" component={LanguageScreen} />
                 <Tab.Screen name="Profile" component={MyProfileScreen} />
             </Tab.Navigator>

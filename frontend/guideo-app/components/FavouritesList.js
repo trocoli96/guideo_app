@@ -9,7 +9,7 @@ import {FavouritesContext} from "../helpers/FavouritesContext";
 function FavouritesList(){
 
     //we get the favourites from the context in App.js to map each poi with the same component as in ExploreScreen
-    const favourites = useContext(FavouritesContext);
+    const favouritesContext = useContext(FavouritesContext);
 
     return(
         <View style={{ flex: 1}}>
@@ -17,8 +17,8 @@ function FavouritesList(){
             contentContainerStyle={styles.scrollView}
         >
             {
-                favourites.favourite.favourites.map((poi) => {
-                    return <PoiCard {...poi} setFavourite={true} key={`${poi.id}`}/>
+                favouritesContext.favouritesList.favourites.map((poi) => {
+                    return <PoiCard {...poi} key={poi.id}/>
                 })
             }
 
