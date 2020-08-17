@@ -1,13 +1,20 @@
-import {Text, View} from "react-native";
 import React from "react";
-import { getToken } from "../helpers/authHelpers";
+import FavouritesList from "../components/FavouritesList";
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 
 function FavouritesScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Favourites!</Text>
-        </View>
+
+    //For now this component is just to add a title "Favourites" in the Favourites Screen, then in case of routing it will be possible
+
+    return (<Stack.Navigator>
+            <Stack.Screen
+                name="Favourites"
+                component={FavouritesList}
+                />
+        </Stack.Navigator>
     );
 }
 
