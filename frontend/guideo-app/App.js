@@ -20,8 +20,8 @@ export default function App({navigation}) {
 
     const [errorMsg, setErrorMsg] = useState(null);
     const [locationData, setLocationData] = useState({
-        "lon": null,
-        "lat": null
+        "lon": Number(null),
+        "lat": Number(null)
     });
 
     //We will load since the beginning our main location to send it as params to each component and use it for fetching, etc..

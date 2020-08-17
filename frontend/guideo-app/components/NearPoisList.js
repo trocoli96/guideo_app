@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState} from "react";
 import {GUIDEO_API_URL} from 'react-native-dotenv';
 import {View, ScrollView} from 'react-native';
 import {styles} from "../Styles/Styles";
