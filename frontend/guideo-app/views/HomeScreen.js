@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, View } from 'react-native';
 import {mapStyle} from '../Styles/MapStyle';
 import {GUIDEO_API_URL} from "react-native-dotenv";
+import {Icon, Button, Text, Fab} from "native-base";
+import { useNavigation } from '@react-navigation/native';
 
-function HomeScreen(props) {
+function HomeScreen(locationData) {
 
+    const navigation = useNavigation();
     const [locations, setLocations] = useState([]);
     const [error, setError] = useState(false);
+    const [active, setActive] = useState(false);
     const data =({
         query: {
-            lat: `${props.lat}`,
-            lon: `${props.lon}`
+            lat: `${locationData.lat}`,
+            lon: `${locationData.lon}`
         },
         paginate: 100,
         only_coordinates: true
@@ -19,7 +23,6 @@ function HomeScreen(props) {
 
     useEffect( () => {
         //Let's search for near locations in our backend
-        console.log("fetching again pois...");
         const url = GUIDEO_API_URL + '/api/locations';
         const options = {
             method: "POST",
@@ -48,7 +51,7 @@ function HomeScreen(props) {
                 });
         };
         fetchData();
-    },[props]) ;
+    },[locationData]) ;
 
 
     const styles = StyleSheet.create({
@@ -62,33 +65,51 @@ function HomeScreen(props) {
             width: Dimensions.get('window').width,
             height: '100%',
         },
+        toggleMenuButton: {
+            top: '40%',
+            left: '30%',
+            display: 'flex',
+            backgroundColor: 'white'
+        }
     });
 
-
     return (
-        <MapView style={styles.mapStyle}
-                 provider={PROVIDER_GOOGLE}
-                 customMapStyle={mapStyle}
-                 showsUserLocation={true}
-                 followsUserLocation={true}
-                 showsMyLocationButton={true}
-                 minZoomLevel={5}
-                 pitchEnabled={false}
-                 loadingEnabled={true}
-                 initialRegion={{
-                     latitude:  41.3959454,
-                     longitude: 2.17863,
-                     latitudeDelta: 0.0922,
-                     longitudeDelta: 0.0421,
-                 }}>
-            {locations.map(marker => (
-                <Marker
-                    key={marker.id}
-                    coordinate={{latitude: Number(`${marker.lat}`), longitude: Number(`${marker.lon}`)}}
-                    anchor={{x: 1, y: 1}}
-                />
-            ))}
-        </MapView>
+        <View>
+            <MapView style={styles.mapStyle}
+                     provider={PROVIDER_GOOGLE}
+                     customMapStyle={mapStyle}
+                     showsUserLocation={true}
+                     followsUserLocation={true}
+                     showsMyLocationButton={true}
+                     minZoomLevel={5}
+                     pitchEnabled={false}
+                     loadingEnabled={true}
+                     initialRegion={{
+                         latitude:  41.3959454,
+                         longitude: 2.17863,
+                         latitudeDelta: 0.0922,
+                         longitudeDelta: 0.0421,
+                     }}>
+                <View>
+                    <Fab
+                        position="topLeft"
+                        style={styles.toggleMenuButton}
+                        onPress={() => navigation.toggleDrawer()}
+                        title='toggleMenu'
+                    >
+                        <Icon name='menu' style={{color: 'grey'}} />
+                    </Fab>
+                </View>
+                {locations.map(marker => (
+                    <Marker
+                        key={marker.id}
+                        coordinate={{latitude: Number(`${marker.lat}`), longitude: Number(`${marker.lon}`)}}
+                        anchor={{x: 1, y: 1}}
+                    />
+                ))}
+            </MapView>
+        </View>
+
     );
 }
 

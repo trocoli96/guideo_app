@@ -1,7 +1,6 @@
-import React, {useEffect, useState, useReducer} from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavigationContainer} from "@react-navigation/native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import HomeScreen from "./views/HomeScreen";
 import MyProfileScreen from "./views/MyProfileScreen";
 import LanguageScreen from "./views/LanguageScreen";
@@ -10,10 +9,14 @@ import ExploreScreen from "./views/ExploreScreen";
 import * as Location from "expo-location";
 import {FavouritesContext} from "./helpers/FavouritesContext";
 import {FavouritesReducer} from "./helpers/FavouritesReducer";
+import {GUIDEO_API_URL} from 'react-native-dotenv';
+import {DrawerContent} from "./components/DrawerContent";
 
-const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App({navigation}) {
+
+    console.log("Your current URL is " + GUIDEO_API_URL);
 
     //Declare the reducer to send it to all the child components
     const [favouritesList, dispatch] = FavouritesReducer();
@@ -45,52 +48,25 @@ export default function App({navigation}) {
             value={{favouritesList, dispatch}}
         >
         <NavigationContainer>
-            <Tab.Navigator
+            <Drawer.Navigator
                 initialRouteName={'Home'}
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-
-                        if (route.name === 'Home') {
-                            iconName = focused ? 'ios-home' : 'ios-home';
-                        } else if (route.name === 'Settings') {
-                            iconName = focused ? 'ios-star' : 'ios-star';
-                        } else if (route.name === 'Profile'){
-                            iconName = focused ? 'ios-person' : 'ios-person';
-                        } else if (route.name === 'Locations'){
-                            iconName = focused ? 'ios-list' : 'ios-list';
-                        } else if (route.name === 'Language'){
-                            iconName = focused ? 'ios-globe' : 'ios-globe';
-                        }
-
-                        // You can return any component that you like here!
-                        return <Ionicons name={iconName} size={size} color={color} />;
-                    },
-                })}
-                tabBarOptions={{
-                    activeTintColor: '#4785ff',
-                    inactiveTintColor: 'gray',
-                    showLabel: false,
-                    style: {
-                        borderTopColor: '#E0E0E0',
-                        borderTopWidth: 1 
-                    }
-                }}
+                drawerType={'back'}
+                drawerContent={props => <DrawerContent {...props} />}
             >
-                <Tab.Screen name="Settings" component={FavouritesScreen} />
-                <Tab.Screen name="Locations">
+                <Drawer.Screen name="Favourites" component={FavouritesScreen} />
+                <Drawer.Screen name="Locations">
                     {() => <ExploreScreen
                         //Sending here location params to all the child components inside this view
-                        {...locationData} />}
-                </Tab.Screen>
-                <Tab.Screen name="Home">
+                        {...locationData}/>}
+                </Drawer.Screen>
+                <Drawer.Screen name="Home">
                     {() => <HomeScreen
                         //Sending here location params to all the child components inside this view
                         {...locationData} />}
-                </Tab.Screen>
-                <Tab.Screen name="Language" component={LanguageScreen} />
-                <Tab.Screen name="Profile" component={MyProfileScreen} />
-            </Tab.Navigator>
+                </Drawer.Screen>
+                <Drawer.Screen name="Language" component={LanguageScreen} />
+                <Drawer.Screen name="Profile" component={MyProfileScreen} />
+            </Drawer.Navigator>
         </NavigationContainer>
         </FavouritesContext.Provider>
 
