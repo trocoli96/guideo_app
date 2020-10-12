@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import { NavigationContainer} from "@react-navigation/native";
-import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from "./views/HomeScreen";
 import MyProfileScreen from "./views/MyProfileScreen";
 import LanguageScreen from "./views/LanguageScreen";
 import FavouritesScreen from './views/FavouritesScreen';
 import ExploreScreen from "./views/ExploreScreen";
 import * as Location from "expo-location";
-import {FavouritesContext} from "./helpers/FavouritesContext";
-import {FavouritesReducer} from "./helpers/FavouritesReducer";
+import {FavouritesContext} from "./helpers/FavouritesHelper/FavouritesContext";
+import {FavouritesReducer} from "./helpers/FavouritesHelper/FavouritesReducer";
 import {GUIDEO_API_URL} from 'react-native-dotenv';
-import {DrawerContent} from "./components/DrawerContent";
+import {DrawerMenuContent} from "./components/DrawerMenuContent/DrawerMenuContent.view";
+import {LocationReducer} from "./helpers/LocationHelper/LocationReducer";
+import {LocationContext} from "./helpers/LocationHelper/LocationContext";
+import {getToken} from "./helpers/authHelpers";
 
 const Drawer = createDrawerNavigator();
 
@@ -19,13 +22,10 @@ export default function App({navigation}) {
     console.log("Your current URL is " + GUIDEO_API_URL);
 
     //Declare the reducer to send it to all the child components
-    const [favouritesList, dispatch] = FavouritesReducer();
-
+    const [favouritesList, dispatchFavourites] = FavouritesReducer();
+    const [locationCoordinates, dispatchLocations] = LocationReducer();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [locationData, setLocationData] = useState({
-        "lon": Number(null),
-        "lat": Number(null)
-    });
 
     //We will load since the beginning our main location to send it as params to each component and use it for fetching, etc..
     useEffect(() => {
@@ -36,39 +36,29 @@ export default function App({navigation}) {
                 setErrorMsg('Permission to access location was denied');
             }
             let location = await Location.getCurrentPositionAsync({accuracy: 1});
-            setLocationData({
-                "lon": location.coords.longitude,
-                "lat": location.coords.latitude,
-            });
+            dispatchLocations({type: 'UPDATE_LOCATION', location })
         })();
     },[]);
 
     return (
-        <FavouritesContext.Provider
-            value={{favouritesList, dispatch}}
-        >
-        <NavigationContainer>
-            <Drawer.Navigator
-                initialRouteName={'Home'}
-                drawerType={'back'}
-                drawerContent={props => <DrawerContent {...props} />}
+        <LocationContext.Provider value={{locationCoordinates, dispatchLocations}}>
+            <FavouritesContext.Provider
+                value={{favouritesList, dispatchFavourites}}
             >
-                <Drawer.Screen name="Favourites" component={FavouritesScreen} />
-                <Drawer.Screen name="Locations">
-                    {() => <ExploreScreen
-                        //Sending here location params to all the child components inside this view
-                        {...locationData}/>}
-                </Drawer.Screen>
-                <Drawer.Screen name="Home">
-                    {() => <HomeScreen
-                        //Sending here location params to all the child components inside this view
-                        {...locationData} />}
-                </Drawer.Screen>
-                <Drawer.Screen name="Language" component={LanguageScreen} />
-                <Drawer.Screen name="Profile" component={MyProfileScreen} />
-            </Drawer.Navigator>
-        </NavigationContainer>
-        </FavouritesContext.Provider>
+                <NavigationContainer>
+                    <Drawer.Navigator
+                        initialRouteName={'Home'}
+                        drawerContent={props => <DrawerMenuContent {...props} />}
+                    >
+                        <Drawer.Screen name="Home" component={HomeScreen}/>
+                        <Drawer.Screen name="Profile" component={MyProfileScreen}/>
+                        <Drawer.Screen name="Favourites" component={FavouritesScreen}/>
+                        <Drawer.Screen name="Locations" component={ExploreScreen}/>
+                        <Drawer.Screen name="Language" component={LanguageScreen}/>
+                    </Drawer.Navigator>
+                </NavigationContainer>
+            </FavouritesContext.Provider>
+        </LocationContext.Provider>
 
     );
 

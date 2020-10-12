@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {Body, Card, CardItem, Icon, Text, Title, Button} from "native-base";
 import {styles} from "../Styles/Styles";
 import {View} from "react-native";
-import {FavouritesContext} from "../helpers/FavouritesContext";
+import {FavouritesContext} from "../helpers/FavouritesHelper/FavouritesContext";
 import { Ionicons } from "@expo/vector-icons";
 
 
@@ -26,10 +26,10 @@ function PoiCard(props) {
     //Action for the poi to add it as a poi or remove it in case the state in already favourite is false
     const handleFavourite = () => {
         if (!alreadyFavourite) {
-            favouritesContext.dispatch({type: "add-favourite", props})
+            favouritesContext.dispatchFavourites({type: "add-favourite", props})
             return setAlreadyFavourite(true);
         }
-        favouritesContext.dispatch({type: "remove-favourite", props})
+        favouritesContext.dispatchFavourites({type: "remove-favourite", props})
         return setAlreadyFavourite(false);
 
     };
@@ -53,7 +53,7 @@ function PoiCard(props) {
                                   paddingTop: 2,
                                   paddingLeft: 4
                               }}>01:40</Text>
-                            <Button onPress={handleFavourite} transparent style={{height: 20}}>
+                            <Button title="Favourite" onPress={handleFavourite} transparent style={{height: 20}}>
                                 <Ionicons name={alreadyFavourite ? 'md-heart' : 'md-heart-empty'} size={20} style={{color: '#cdcdcc', paddingLeft: 150}}/>
                             </Button>
                         </View>

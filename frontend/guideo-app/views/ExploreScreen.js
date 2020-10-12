@@ -1,25 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ListLocations from "../components/ListLocations";
 import NearPoisList from "../components/NearPoisList";
-import {Image} from 'react-native';
+import LogoTitle from "../components/LogoTitle";
+import {LocationContext} from "../helpers/LocationHelper/LocationContext";
 
 const Stack = createStackNavigator();
 
-//The only way to take the logo and don't crash in IOS and Android
-function LogoTitle() {
-    return (
-        <Image
-            style={{ width: 180, height: 60, resizeMode: 'contain' }}
-            source={require('../Resources/logo-letters.png')}
-        />
-    );
-}
+function ExploreScreen(){
 
-function ExploreScreen(props){
-    const [locationData, setLocationData] = useState({
-        "lon": props.lon,
-        "lat": props.lat
+    const locationContext = useContext(LocationContext);
+    const locationData = ({
+        "lon": locationContext.locationCoordinates.lon,
+        "lat": locationContext.locationCoordinates.lat
     });
 
     return (

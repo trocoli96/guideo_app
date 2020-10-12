@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import {mapStyle} from '../Styles/MapStyle';
 import {GUIDEO_API_URL} from "react-native-dotenv";
 import {Icon, Button, Text, Fab} from "native-base";
 import { useNavigation } from '@react-navigation/native';
+import {LocationContext} from "../helpers/LocationHelper/LocationContext";
 
-function HomeScreen(locationData) {
+function HomeScreen() {
 
+    const locationContext = useContext(LocationContext);
     const navigation = useNavigation();
     const [locations, setLocations] = useState([]);
     const [error, setError] = useState(false);
-    const [active, setActive] = useState(false);
     const data =({
         query: {
-            lat: `${locationData.lat}`,
-            lon: `${locationData.lon}`
+            lat: `${locationContext.locationCoordinates.lat}`,
+            lon: `${locationContext.locationCoordinates.lon}`
         },
         paginate: 100,
         only_coordinates: true
@@ -51,7 +52,7 @@ function HomeScreen(locationData) {
                 });
         };
         fetchData();
-    },[locationData]) ;
+    },[locationContext]) ;
 
 
     const styles = StyleSheet.create({

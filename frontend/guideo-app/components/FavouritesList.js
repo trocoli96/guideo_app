@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {styles} from "../Styles/Styles";
 import PoiCard from "./PoiCard";
 import {ScrollView, View} from "react-native";
-import {FavouritesContext} from "../helpers/FavouritesContext";
+import {FavouritesContext} from "../helpers/FavouritesHelper/FavouritesContext";
 
 
 

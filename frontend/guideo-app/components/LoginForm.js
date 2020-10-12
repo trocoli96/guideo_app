@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, TextInput, Button, Image} from "react-native";
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
-import {storeToken, removeToken, getToken} from '../helpers/authHelpers';
+import {storeToken, removeToken} from '../helpers/authHelpers';
 
 function LoginForm({navigation}) {
 
