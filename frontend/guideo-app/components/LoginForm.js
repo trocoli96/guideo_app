@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Text, View, TextInput, Button, Image} from "react-native";
 import { GUIDEO_API_URL } from 'react-native-dotenv';
 import {styles} from '../Styles/Styles.js';
-import {storeToken, removeToken} from '../helpers/authHelpers';
+import {storeToken, removeToken} from '../helpers/AuthHelper/AuthStorage';
 
 function LoginForm({navigation}) {
 
@@ -21,7 +21,6 @@ function LoginForm({navigation}) {
     const handleLogin = async () => {
         setError(false);
         setIsFetching(true);
-
         const url = GUIDEO_API_URL + `/api/login`;
         const options = {
             method: "POST",
@@ -31,7 +30,6 @@ function LoginForm({navigation}) {
                 "Content-type": "application/json"
             }),
         };
-
         return fetch(url, options)
             .then(response => {
                 if (response.ok) {
@@ -43,7 +41,8 @@ function LoginForm({navigation}) {
             }).then(async (data) => {
                 const tokenSuccessfullyStored = await storeToken(data['access_token']);
                 if (tokenSuccessfullyStored) {
-                    setLoggedIn(true);
+                    setIsFetching(false);
+                    return setLoggedIn(true);
                 }
                 setIsFetching(false);
             }).catch(error => {
@@ -56,7 +55,7 @@ function LoginForm({navigation}) {
     const logout = async () => {
         const loggedOut = await removeToken();
         if (loggedOut) {
-            setLoggedIn(false);
+            return setLoggedIn(false);
         }
     }
 
@@ -103,7 +102,6 @@ function LoginForm({navigation}) {
                 title="Signup"
                 onPress={()=> navigation.navigate('Signup')}>
                 </Button>
-
             </View>
         </View>
     }</View> )

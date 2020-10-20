@@ -10,6 +10,7 @@ const Stack = createStackNavigator();
 function ExploreScreen(){
 
     const locationContext = useContext(LocationContext);
+    console.log(locationContext);
     const locationData = ({
         "lon": locationContext.locationCoordinates.lon,
         "lat": locationContext.locationCoordinates.lat

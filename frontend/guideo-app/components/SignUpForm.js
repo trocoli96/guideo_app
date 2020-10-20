@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {View, Text, Button, Image, TextInput} from 'react-native';
 import {styles} from "../Styles/Styles";
 import {GUIDEO_API_URL} from 'react-native-dotenv';
-import {storeToken} from "../helpers/authHelpers";
+import {storeToken} from "../helpers/AuthHelper/AuthStorage";
 
 export default function SignupForm({navigation}) {
     const [name, setName] = useState('');
